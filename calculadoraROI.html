@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de ROI - AeraSense</title>
+</head>
+ <!-- Luan Iada do Nascimento - 04252001 -->
+<body>
+    <h1>Calculadora de ROI - Simulação para Grandes Restaurantes</h1>
+    <p>Preencha os campos abaixo com as estimativas da sua operação.</p>
+
+    <p>Número de sensores necessários para a sua cozinha:</p>
+    <input type="text" id="input_sensores" placeholder="Ex: 5">
+
+    <p><b>DADOS DA SUA OPERAÇÃO</b></p>
+    <p>Faturamento diário médio (R$):</p>
+    <input type="text" id="input_faturamentoDiario" placeholder="Ex: 40000">
+
+    <p>Valor do estoque perecível (R$):</p>
+    <input type="text" id="input_valorEstoque" placeholder="Ex: 100000">
+
+    <p>Estimativa de dias de interdição pós-acidente:</p>
+    <input type="text" id="input_diasParado" placeholder="Ex: 30"> <br><br>
+
+    <button onclick="calcularROI()">Calcular Análise de Risco</button> <br>
+
+    <div id="div_mensagem"></div>
+
+</body>
+<script>
+    function calcularROI() {
+        var custoPorSensor = 200;
+        var custoInstalacao = 3000;
+        var numSensores = Number(input_sensores.value);
+        var faturamentoDiario = Number(input_faturamentoDiario.value);
+        var valorEstoque = Number(input_valorEstoque.value);
+        var diasParado = Number(input_diasParado.value);
+
+        var custoDosSensores = custoPorSensor * numSensores;
+        var custoTotalSistema = custoDosSensores + custoInstalacao;
+
+        var perdaReceita = faturamentoDiario * diasParado;
+        var prejuizoTotalEvitado = perdaReceita + valorEstoque;
+
+        div_mensagem.innerHTML =
+            (`<h2>Análise de Risco vs Investimento:</h2>
+            <p>Com um investimento único de <b> ${custoTotalSistema.toFixed(2)} </b>
+            você protege sua operação contra um prejuízo potencial de <b> ${prejuizoTotalEvitado.toFixed(2)} </b></p>`)
+    }
+</script>
+
+</html>
