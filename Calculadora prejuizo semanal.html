@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Simulador Financeiro </title>
+</head>
+
+<body>
+    <u><b><h1>Calculadora de Prejuizo Semanal </h1></b></u>
+    
+    <b>Faturamento Diário:</b>
+    <input type="text" id="input_faturamento"><br><br>
+
+     
+    <b>Horas de Paralisação (semanal):</b>
+    <input type="text" id="input_paralisação"><br><br>
+
+     
+    <b>Custo de Reposição dos Equipamentos: (custo semanal)</b>
+    <input type="text" id="input_reposição"><br><br>
+
+    
+    C<b>usto de Reparos na Estrutura: (custo semanal)</b>
+     <input type="text" id="input_reparo"><br><br>
+
+    <button onclick="analise()"> Analisar </button>
+
+    <span id="span_mensagem"></span>
+</body>
+
+</html>
+<script>
+    semana = 0
+    prejuizo = 0
+
+    function analise(){
+    var fat = Number(input_faturamento.value)
+    var paralisação = Number(input_paralisação.value)
+    var equip = Number (input_reposição.value)
+    var reparo = Number (input_reparo.value)
+    var fat_hr = (fat / 24)
+    var preju_dia = (fat_hr * paralisação)
+    var gasto_semana = (equip + reparo)
+    var preju_semana = ((preju_dia * 7) + gasto_semana)
+    var preju_mês = ((preju_semana + gasto_semana)* 4) 
+    prejuizo += preju_semana
+    semana += 1
+
+    span_mensagem.innerHTML += (`<br><br> Na semana${semana}<br>
+     Os custos de reposição foram de ${equip}$<br>
+     Os custos com reparos ${reparo}$ <br>
+     E a quantidade de horas de paralisação foram de ${paralisação} horas <br> 
+     Prejuizo diário ${preju_dia.toFixed(2)} <br>
+     Prejuizo total da semana ${preju_semana.toFixed (2)}$ <br>
+    Prejuizo do mês (estimado) ${preju_mês.toFixed(2)}$ <br>
+    Prejuizo total até o momento ${prejuizo.toFixed(2)}`)
+    }
+
+
+
+
+</script>
