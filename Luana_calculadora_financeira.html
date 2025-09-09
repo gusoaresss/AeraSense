@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+<h1>CALCULADORA FINANCEIRA</h1> 
+
+
+<p> Quantas mangueiras de gás você tem? ( com essa informação, fará o cálculo de quantos sensores vai precisar)</p> 
+
+<input id="input_sensores"  type="text"> <br>
+
+<button onclick="calcular()" >Calcular</button>
+
+<div id="div_mensagem"></div>
+
+
+</body>
+</html>
+
+<script>
+
+function calcular() {
+    var quantidade_sensor = Number(input_sensores.value);
+    var media_desastre=  1715000
+
+    var preco_placa_arduino = 294.36; // ref: https://www.amazon.com.br/Arduino-Uno-R3/dp/B008GRTSV6/ref=asc_df_B008GRTSV6?mcid=c458f2ab31f33700bd48f55c1ccb681c&tag=googleshopp00-20&linkCode=df0&hvadid=709857019413&hvpos=&hvnetw=g&hvrand=7922170703179129608&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9195695&hvtargid=pla-457497319401&psc=1&language=pt_BR&gad_source=4
+    var preco_placa_sensor = 30; // ref: https://www.google.com/aclk?sa=l&ai=DChcSEwi81vuu-cmPAxX0aEgAHVWFKMkYABANGgJjZQ&co=1&ase=2&gclid=CjwKCAjw_fnFBhB0EiwAH_MfZmAP92uM4Up7nj3rqVltlAtWOXnPtivdkfoQjgYhv3BIXNTOS9bQOhoCQ8sQAvD_BwE&cid=CAASJeRo98iLxrqo0Co6dt8fXOc5EPdwnIxk03OMpdttD0mbyjEmEjc&category=acrcp_v1_48&sig=AOD64_32Yu1ylu5TrSLpLdDTAt8lR3VV-w&ctype=5&q=&nis=4&ved=2ahUKEwjAnveu-cmPAxWOq5UCHT_zDBgQ9aACKAB6BAgGEEM&adurl=
+    var taxa_mao_de_obra = ((preco_placa_arduino + preco_placa_sensor) * 0.25)/100 ; // estimativa de taxa
+
+    var preco_base_sensor = preco_placa_arduino + preco_placa_sensor;
+    var taxa = (preco_base_sensor * taxa_mao_de_obra) / 100;
+    var preco_sensor_taxa = preco_base_sensor + taxa;
+
+    var valor_total_mangueiras = quantidade_sensor * preco_sensor_taxa * 2; // a cada mangueira, 2 sensores calculando 2x o preço base
+
+    var preco_site = 12500; // 12000 a 15000 - https://www.next4.com.br/quanto-custa-criar-um-site-em-2025/#:~:text=Um%20site%20institucional%20b%C3%A1sico%20custa,de%20p%C3%A1ginas%20a%20serem%20desenvolvidas.
+    var preco_hospedagem_site = 250; // https://www.shopify.com/br/blog/custos-de-hospedagem#:~:text=A%20hospedagem%20compartilhada%20tipicamente%20custa,mais%20servi%C3%A7os%20se%20fazem%20necess%C3%A1rios.
+    var preco_total_site = preco_site + preco_hospedagem_site;
+
+    var valor_fixo = preco_total_site + taxa_mao_de_obra ;
+
+    var valor_total = valor_fixo + valor_total_mangueiras ;
+
+   var media_desastre = 1715000 // média de quanto um restaurante teve de prejuiso com a explosão. A média foi feita com base na arquitetura, lucro diário, multa por esse ocorrido, de um restaurante que ocorreu esse incidente
+// var economizar = media_desastre - valor_total_do_servico
+
+div_mensagem.innerHTML = ` Com ${quantidade_sensor} mangueiras, <br>
+ sendo o nosso produto como um todo (sensor e site),com o valor  R$ ${valor_fixo.toFixed(2)}, <br>
+ sairá por R$ ${valor_total.toFixed(2)} (a cada 1 mangueira, vai precisar de 2 sensores, para entrada e outro para saída). <br>
+ Assim tendo a média que um desastre sairá por R$ ${media_desastre}, <br>
+ você economizará R$ ${economizar.toFixed(2)} <br>` 
+
+}
+
+</script> 
