@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira AeraSense</title>
+</head>
+
+<body>
+
+    <h1>CALCULADORA FINANCEIRA</h1>
+    <p>Preencha os campos abaixo para simular a economia com o AeraSense.</p>
+    <hr>
+
+    <p>Quantos pontos de gás (mangueiras) sua cozinha possui?</p>
+    <input id="input_mangueiras" type="number" placeholder="Ex: 5"> <br>
+
+    <p>Valor da sua infraestrutura (valor do seu restaurante em R$)</p>
+    <input type="number" id="input_infraestrutura" placeholder="Ex: 500000"><br>
+
+    <p>Quanto você gasta de estoque por mês (em R$)</p>
+    <input type="number" id="input_estoque" placeholder="Ex: 70000"> <br>
+
+    <p>Faturamento médio mensal (em R$)</p>
+    <input type="number" id="input_faturamentoMensal"> <br>
+
+    <p>Estimativa de dias de interdição pós-acidente:</p>
+    <input type="number" id="input_diasParado"> <br> <br>
+
+    <button onclick="calcular()">Calcular Economia</button>
+
+    <div id="div_mensagem"></div>
+
+</body>
+
+</html>
+
+<script>
+    function calcular() {
+
+        var quantidade_mangueiras = Number(input_mangueiras.value);
+        var valor_infraestrutura = Number(input_infraestrutura.value);
+        var valor_estoque = Number(input_estoque.value);
+        var faturamento_mensal = Number(input_faturamentoMensal.value);
+        var dias_parado = Number(input_diasParado.value);
+
+        var preco_placa_arduino = 294.36; // ref: https://www.amazon.com.br/Arduino-Uno-R3/dp/B008GRTSV6/...
+        var preco_placa_sensor = 30.00;   // ref: https://www.google.com/aclk?...
+        var preco_site = 12500.00;        // 12000 a 15000 - https://www.next4.com.br/...
+        var mensalidade_site = 250.00;    // https://www.shopify.com/br/blog/custos-de-hospedagem...
+
+        var preco_base_hardware = preco_placa_arduino + preco_placa_sensor;
+        var valor_sensor_unitario = preco_base_hardware * 1.25; // Adiciona 25% de taxa de mão de obra
+
+        var numero_de_sensores = quantidade_mangueiras * 2; // a cada mangueira, 2 sensores
+
+        var custo_total_sensores = numero_de_sensores * valor_sensor_unitario;
+        var investimento_total = custo_total_sensores + preco_site;
+
+        var faturamento_diario = faturamento_mensal / 30;
+        var perda_total_faturamento = faturamento_diario * dias_parado;
+
+        var custo_total_desastre = valor_infraestrutura + valor_estoque + perda_total_faturamento;
+
+        var economia = custo_total_desastre - investimento_total;
+
+        /*
+            dica de quanto vai perder se ficar parado:
+
+            - pergunta lucro do ultimo mês
+            - calcular média diária (divide por 30)
+            - cada dia parado, perde X
+
+            OBS: perguntar valor de infraestrutura e estoque, para adicionar ao cálculo
+        */
+
+        div_mensagem.innerHTML = `
+                <hr>
+                <h2>Análise de Risco AeraSense</h2>
+                <h3>Seu Investimento em Segurança:</h3>
+                <p>
+                    Custo dos Sensores (${numero_de_sensores} unidades para ${quantidade_mangueiras} pontos de gás): <b>R$ ${custo_total_sensores.toFixed(2).replace('.', ',')}</b> <br>
+                    Custo de Implementação do Site/Dashboard: <b>R$ ${preco_site.toFixed(2).replace('.', ',')}</b> <br>
+                    <b>VALOR DO INVESTIMENTO INICIAL: R$ ${investimento_total.toFixed(2).replace('.', ',')}</b> <br>
+                    <small>(+ mensalidade de R$ ${mensalidade_site.toFixed(2).replace('.', ',')} para manutenção do sistema online)</small>
+                </p>
+                <h3>Prejuízo Evitado em Caso de Desastre:</h3>
+                <p>
+                    Perda de Infraestrutura: R$ ${valor_infraestrutura.toFixed(2).replace('.', ',')} <br>
+                    Perda de Estoque: R$ ${valor_estoque.toFixed(2).replace('.', ',')} <br>
+                    Perda de Faturamento (${dias_parado} dias parado): R$ ${perda_total_faturamento.toFixed(2).replace('.', ',')} <br>
+                    <b>PREJUÍZO TOTAL ESTIMADO: R$ ${custo_total_desastre.toFixed(2).replace('.', ',')}</b>
+                </p>
+                <h3 style="color: green;">
+                    Ao proteger sua operação com o AeraSense, a economia estimada ao evitar um único incidente é de: <br>
+                    R$ ${economia.toFixed(2).replace('.', ',')}
+                </h3>
+            `;
+    }
+</script>
